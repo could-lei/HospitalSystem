@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.receptorMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.receptor">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uId" jdbcType="INTEGER" property="uid" />
+    <result column="receptor" jdbcType="VARCHAR" property="receptor" />
+    <result column="createTime" jdbcType="INTEGER" property="createtime" />
+    <result column="state" jdbcType="INTEGER" property="state"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_receptor
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.receptor">
+    insert into sys_receptor (id, uId, receptor, 
+      createTime)
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{receptor,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.receptor">
+    update sys_receptor
+    set uId = #{uid,jdbcType=INTEGER},
+      receptor = #{receptor,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=INTEGER},
+      state=#{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByMerdiateId" parameterType="map" resultMap="BaseResultMap">
+    SELECT receptor2.id, receptor2.uId, receptor2.receptor, receptor2.createTime,receptor2.state
+    from sys_receptor as receptor2 ,sys_patient as p
+    WHERE p.medicare=#{medicare_id,jdbcType=INTEGER} AND receptor2.uId=p.id
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, uId, receptor, createTime,state
+    from sys_receptor
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, uId, receptor, createTime,state
+    from sys_receptor
+  </select>
+</mapper>

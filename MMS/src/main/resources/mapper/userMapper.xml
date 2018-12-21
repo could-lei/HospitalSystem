@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.userMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.user">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id_card_num" jdbcType="VARCHAR" property="idCardNum" />
+    <result column="eId" jdbcType="BIGINT" property="eid" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="last_ip" jdbcType="BIGINT" property="lastIp" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="BIGINT" property="phone" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="family_address" jdbcType="VARCHAR" property="familyAddress" />
+    <result column="contact_address" jdbcType="VARCHAR" property="contactAddress" />
+    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from sys_user
+    where id = #{id,jdbcType=BIGINT}
+      and id_card_num = #{idCardNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.user">
+    insert into sys_user (id, id_card_num, eId, 
+      create_time, last_ip, name, 
+      password, phone, state, 
+      update_time, family_address, contact_address, 
+      birthplace, sex)
+    values (#{id,jdbcType=BIGINT}, #{idCardNum,jdbcType=VARCHAR}, #{eid,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT}, #{lastIp,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=BIGINT}, #{familyAddress,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, 
+      #{birthplace,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.user">
+    update sys_user
+    set eId = #{eid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_ip = #{lastIp,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=BIGINT},
+      state = #{state,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      family_address = #{familyAddress,jdbcType=VARCHAR},
+      contact_address = #{contactAddress,jdbcType=VARCHAR},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+      and id_card_num = #{idCardNum,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select id, id_card_num, eId, create_time, last_ip, name, password, phone, state, 
+    update_time, family_address, contact_address, birthplace, sex
+    from sys_user
+    where id = #{id,jdbcType=BIGINT}
+      and id_card_num = #{idCardNum,jdbcType=VARCHAR}
+  </select>
+  <select id="selectById" parameterType="map" resultMap="BaseResultMap">
+    SELECT id, id_card_num, eId, create_time, last_ip, name, password, phone, state,
+    update_time, family_address, contact_address, birthplace, sex
+    FROM sys_user
+    WHERE id=#{id,jdbcType=BIGINT}
+  </select>
+  <select id="findByName" parameterType="map" resultMap="BaseResultMap">
+    SELECT id, id_card_num, eId, create_time, last_ip, name, password, phone, state,
+    update_time, family_address, contact_address, birthplace, sex
+    FROM sys_user
+    WHERE name=#{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, id_card_num, eId, create_time, last_ip, name, password, phone, state, 
+    update_time, family_address, contact_address, birthplace, sex
+    from sys_user
+  </select>
+</mapper>

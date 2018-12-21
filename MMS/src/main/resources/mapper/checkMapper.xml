@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.checkMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.check">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="r_id" jdbcType="BIGINT" property="rId" />
+    <id column="d_id" jdbcType="BIGINT" property="dId" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from sys_check_list
+    where id = #{id,jdbcType=BIGINT}
+      and r_id = #{rId,jdbcType=BIGINT}
+      and d_id = #{dId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.check">
+    insert into sys_check_list (id, r_id, d_id, `describe`
+      )
+    values (#{id,jdbcType=BIGINT}, #{rId,jdbcType=BIGINT}, #{dId,jdbcType=BIGINT}, #{describe,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.check">
+    update sys_check_list
+    set `describe` = #{describe,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+      and r_id = #{rId,jdbcType=BIGINT}
+      and d_id = #{dId,jdbcType=BIGINT}
+      and status=#{status,jdbcType=INTEGER}
+  </update>
+  <select id="finishCheck" parameterType="map" resultMap="BaseResultMap">
+    UPDATE sys_check_list
+    SET status=1
+    WHERE r_id=#{rId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByMid" parameterType="map" resultMap="BaseResultMap">
+    SELECT c.id, c.r_id, c.d_id, c.`describe`,c.status
+    FROM sys_check_list as c, sys_patient as p ,sys_receptor as r
+    WHERE c.r_id=r.id AND r.uId=p.id AND p.medicare=#{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select id, r_id, d_id, `describe`,status
+    from sys_check_list
+    where id = #{id,jdbcType=BIGINT}
+      and r_id = #{rId,jdbcType=BIGINT}
+      and d_id = #{dId,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, r_id, d_id, `describe`,status
+    from sys_check_list
+  </select>
+</mapper>

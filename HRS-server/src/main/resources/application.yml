@@ -1,0 +1,25 @@
+server:
+  port: 8763
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: HRS-server
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+  redis:
+      host: 119.29.82.246
+      port: 6379
+  datasource:
+      url: jdbc:mysql://127.0.0.1:3306/hospital
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+shiro:
+  loginUrl: /login
+  jessionid: sessionId
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.model

@@ -1,0 +1,23 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: MIMS-server
+  redis:
+      host: 119.29.82.246
+      port: 6379
+  datasource:
+      url: jdbc:mysql://localhost:3306/hospital
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+shiro:
+  loginUrl: /login
+  jessionid: sessionId
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.model
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/

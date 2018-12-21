@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.patientMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.patient">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="last_ip" jdbcType="BIGINT" property="lastIp" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="BIGINT" property="phone" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="birthplace" jdbcType="VARCHAR" property="birthplace" />
+    <result column="family_address" jdbcType="VARCHAR" property="familyAddress" />
+    <result column="contact_address" jdbcType="VARCHAR" property="contactAddress" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="medicare" jdbcType="INTEGER" property="medicare" />
+    <result column="eid" jdbcType="BIGINT" property="eid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_patient
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.patient">
+    insert into sys_patient (id, create_time, last_ip, 
+      name, password, phone, 
+      state, update_time, birthplace, 
+      family_address, contact_address, sex, 
+      medicare, eid)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{lastIp,jdbcType=BIGINT}, 
+      #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, 
+      #{state,jdbcType=INTEGER}, #{updateTime,jdbcType=BIGINT}, #{birthplace,jdbcType=VARCHAR}, 
+      #{familyAddress,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
+      #{medicare,jdbcType=INTEGER}, #{eid,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.patient">
+    update sys_patient
+    set create_time = #{createTime,jdbcType=BIGINT},
+      last_ip = #{lastIp,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=BIGINT},
+      state = #{state,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      birthplace = #{birthplace,jdbcType=VARCHAR},
+      family_address = #{familyAddress,jdbcType=VARCHAR},
+      contact_address = #{contactAddress,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      medicare = #{medicare,jdbcType=INTEGER},
+      eid = #{eid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, create_time, last_ip, name, password, phone, state, update_time, birthplace, 
+    family_address, contact_address, sex, medicare, eid
+    from sys_patient
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, create_time, last_ip, name, password, phone, state, update_time, birthplace, 
+    family_address, contact_address, sex, medicare, eid
+    from sys_patient
+  </select>
+</mapper>

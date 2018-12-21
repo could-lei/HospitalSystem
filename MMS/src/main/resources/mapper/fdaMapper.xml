@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.fdaMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.fda">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="drug" jdbcType="VARCHAR" property="drug" />
+    <result column="drugNumber" jdbcType="VARCHAR" property="drugnumber" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="pruductId" jdbcType="VARCHAR" property="pruductid" />
+    <result column="dosage" jdbcType="DOUBLE" property="dosage" />
+    <result column="effectiveDate" jdbcType="INTEGER" property="effectivedate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_fda
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.fda">
+    insert into sys_fda (id, drug, drugNumber, 
+      describe, pruductId, dosage, 
+      effectiveDate)
+    values (#{id,jdbcType=INTEGER}, #{drug,jdbcType=VARCHAR}, #{drugnumber,jdbcType=VARCHAR}, 
+      #{describe,jdbcType=VARCHAR}, #{pruductid,jdbcType=VARCHAR}, #{dosage,jdbcType=DOUBLE}, 
+      #{effectivedate,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.fda">
+    update sys_fda
+    set drug = #{drug,jdbcType=VARCHAR},
+      drugNumber = #{drugnumber,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
+      pruductId = #{pruductid,jdbcType=VARCHAR},
+      dosage = #{dosage,jdbcType=DOUBLE},
+      effectiveDate = #{effectivedate,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, drug, drugNumber, `describe`, pruductId, dosage, effectiveDate
+    from sys_fda
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, drug, drugNumber, `describe`, pruductId, dosage, effectiveDate
+    from sys_fda
+  </select>
+</mapper>

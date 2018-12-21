@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.stockMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.stock">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="fdaId" jdbcType="INTEGER" property="fdaid" />
+    <result column="ground_time" jdbcType="INTEGER" property="groundTime" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.stock">
+    insert into sys_stock (id, fdaId, ground_time, 
+      number, unit)
+    values (#{id,jdbcType=INTEGER}, #{fdaid,jdbcType=INTEGER}, #{groundTime,jdbcType=INTEGER}, 
+      #{number,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.stock">
+    update sys_stock
+    set fdaId = #{fdaid,jdbcType=INTEGER},
+      ground_time = #{groundTime,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, fdaId, ground_time, number, unit
+    from sys_stock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, fdaId, ground_time, number, unit
+    from sys_stock
+  </select>
+</mapper>

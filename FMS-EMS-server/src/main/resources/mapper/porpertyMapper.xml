@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.porpertyMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.porperty">
+    <id column="uId" jdbcType="INTEGER" property="uid" />
+    <result column="departmentId" jdbcType="INTEGER" property="departmentid" />
+    <result column="basePay" jdbcType="DOUBLE" property="basepay" />
+    <result column="addition" jdbcType="DOUBLE" property="addition" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_property
+    where uId = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.porperty">
+    insert into sys_property (uId, departmentId, basePay, 
+      addition, number)
+    values (#{uid,jdbcType=INTEGER}, #{departmentid,jdbcType=INTEGER}, #{basepay,jdbcType=DOUBLE}, 
+      #{addition,jdbcType=DOUBLE}, #{number,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.porperty">
+    update sys_property
+    set departmentId = #{departmentid,jdbcType=INTEGER},
+      basePay = #{basepay,jdbcType=DOUBLE},
+      addition = #{addition,jdbcType=DOUBLE},
+      number = #{number,jdbcType=INTEGER}
+    where uId = #{uid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select uId, departmentId, basePay, addition, number
+    from sys_property
+    where uId = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select uId, departmentId, basePay, addition, number
+    from sys_property
+  </select>
+</mapper>

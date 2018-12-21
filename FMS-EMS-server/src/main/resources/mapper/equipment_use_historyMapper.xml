@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.equipment_use_historyMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.equipment_use_history">
+    <id column="eId" jdbcType="INTEGER" property="eid" />
+    <result column="equipmentId" jdbcType="INTEGER" property="equipmentid" />
+    <result column="applyTime" jdbcType="INTEGER" property="applytime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_equipment_use_history
+    where eId = #{eid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.equipment_use_history">
+    insert into sys_equipment_use_history (eId, equipmentId, applyTime
+      )
+    values (#{eid,jdbcType=INTEGER}, #{equipmentid,jdbcType=INTEGER}, #{applytime,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.equipment_use_history">
+    update sys_equipment_use_history
+    set equipmentId = #{equipmentid,jdbcType=INTEGER},
+      applyTime = #{applytime,jdbcType=INTEGER}
+    where eId = #{eid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select eId, equipmentId, applyTime
+    from sys_equipment_use_history
+    where eId = #{eid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select eId, equipmentId, applyTime
+    from sys_equipment_use_history
+  </select>
+</mapper>

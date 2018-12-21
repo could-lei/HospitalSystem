@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.dictionnarysMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.dictionnarys">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="No" jdbcType="INTEGER" property="no" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="define" jdbcType="VARCHAR" property="define" />
+    <result column="date" jdbcType="BIGINT" property="date" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_dictionnarys
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.dictionnarys">
+    insert into sys_dictionnarys (id, No, content, 
+      define, date)
+    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{define,jdbcType=VARCHAR}, #{date,jdbcType=BIGINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.dictionnarys">
+    update sys_dictionnarys
+    set No = #{no,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      define = #{define,jdbcType=VARCHAR},
+      date = #{date,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, No, content, define, date
+    from sys_dictionnarys
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, No, content, define, date
+    from sys_dictionnarys
+  </select>
+</mapper>

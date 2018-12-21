@@ -1,0 +1,37 @@
+spring:
+  redis:
+    host: 119.29.82.246
+    port: 6379
+  application:
+    name: user_shiro-server
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/hospital?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.DefaultComponentSafeNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    thymeleaf:
+      cache: false
+      mode: LEGACYHTML5
+#    database-platform: org.hibernate.dialect.MySQLDialect
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.model
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+server:
+  port: 8762
+shiro:
+  loginUrl: /login
+  jessionid: sessionId

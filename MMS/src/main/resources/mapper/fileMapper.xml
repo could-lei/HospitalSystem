@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.fileMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.file">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uId" jdbcType="INTEGER" property="uid" />
+    <result column="reachTime" jdbcType="INTEGER" property="reachtime" />
+    <result column="leaveTime" jdbcType="INTEGER" property="leavetime" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="receptorId" jdbcType="INTEGER" property="receptorid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_file
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.file">
+    insert into sys_file (id, uId, reachTime, 
+      leaveTime, comment, receptorId
+      )
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{reachtime,jdbcType=INTEGER}, 
+      #{leavetime,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{receptorid,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.file">
+    update sys_file
+    set uId = #{uid,jdbcType=INTEGER},
+      reachTime = #{reachtime,jdbcType=INTEGER},
+      leaveTime = #{leavetime,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      receptorId = #{receptorid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, uId, reachTime, leaveTime, comment, receptorId
+    from sys_file
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, uId, reachTime, leaveTime, comment, receptorId
+    from sys_file
+  </select>
+</mapper>
