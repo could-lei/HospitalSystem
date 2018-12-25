@@ -29,9 +29,18 @@ public interface patientMapper {
      * @return patient
      */
     patient selectByMedicareId(Long id);
-
+    /**
+     * fetch data by phone
+     * @param phone 手机号
+     * @return patient
+     */
     patient selectByPhone(Long phone);
 
+    /**
+     * fetch data by idCard
+     * @param IdCard
+     * @return
+     */
     patient selectByIdCard(String IdCard);
     /**
      * fetch all of data

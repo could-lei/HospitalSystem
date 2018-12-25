@@ -24,4 +24,4 @@
 #di: f:/spring:
 spring:
   profiles:
-    active: centos
+    active: dev

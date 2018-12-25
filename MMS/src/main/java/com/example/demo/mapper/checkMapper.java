@@ -17,6 +17,8 @@ public interface checkMapper {
     int finishCheck(Long rId);
 
     List<check> selectByMid(Long id);
+    check selectById(@Param("id") Long id);
+    int updateById(@Param("id") Long id);
 
     int updateByPrimaryKey(check record);
 }

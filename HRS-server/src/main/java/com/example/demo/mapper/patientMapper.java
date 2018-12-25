@@ -1,6 +1,8 @@
 package com.example.demo.mapper;
 
 import com.example.demo.model.patient;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface patientMapper {
@@ -15,4 +17,5 @@ public interface patientMapper {
     List<patient> selectAll();
 
     int updateByPrimaryKey(patient record);
+    patient check(@Param("phone")Long phone, @Param("idcard")String idcard);
 }

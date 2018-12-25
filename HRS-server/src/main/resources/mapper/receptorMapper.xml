@@ -31,6 +31,11 @@
     from sys_receptor as receptor2 ,sys_patient as p
     WHERE p.medicare=#{medicare_id,jdbcType=INTEGER} AND receptor2.uId=p.id
   </select>
+  <select id="selectByMid" parameterType="map" resultMap="BaseResultMap">
+    SELECT receptor2.id, receptor2.uId, receptor2.receptor, receptor2.createTime,receptor2.state
+    from sys_receptor as receptor2 ,sys_patient as p
+    WHERE p.medicare=#{medicare_id,jdbcType=INTEGER} AND receptor2.uId=p.id and receptor2.state=0
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, uId, receptor, createTime,state
     from sys_receptor

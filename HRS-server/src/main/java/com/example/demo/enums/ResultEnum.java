@@ -4,7 +4,7 @@ public enum ResultEnum {
 
     Fail(1,"失败"),
     Error(-1,"未知错误"),
-    Success(0,"成功");
+    Success(20000,"成功");
 
 
 

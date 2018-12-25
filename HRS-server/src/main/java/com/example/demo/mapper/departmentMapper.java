@@ -14,4 +14,6 @@ public interface departmentMapper {
     List<department> selectAll();
 
     int updateByPrimaryKey(department record);
+
+    List<department>findByRid(Integer rId);
 }

@@ -28,15 +28,23 @@
       and d_id = #{dId,jdbcType=BIGINT}
       and status=#{status,jdbcType=INTEGER}
   </update>
+  <update id="updateById" parameterType="map" >
+    UPDATE sys_check_list
+    SET status=1
+    WHERE id=#{id,jdbcType=BIGINT}
+  </update>
   <select id="finishCheck" parameterType="map" resultMap="BaseResultMap">
     UPDATE sys_check_list
     SET status=1
-    WHERE r_id=#{rId,jdbcType=BIGINT}
+    WHERE id=#{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectById" parameterType="map" resultMap="BaseResultMap">
+    SELECT * FROM sys_check_list  WHERE id=#{id,jdbcType=BIGINT}
   </select>
   <select id="selectByMid" parameterType="map" resultMap="BaseResultMap">
     SELECT c.id, c.r_id, c.d_id, c.`describe`,c.status
     FROM sys_check_list as c, sys_patient as p ,sys_receptor as r
-    WHERE c.r_id=r.id AND r.uId=p.id AND p.medicare=#{id,jdbcType=BIGINT}
+    WHERE c.r_id=r.id AND r.uId=p.id AND p.medicare=#{id,jdbcType=BIGINT} AND r.state=0 AND c.status=0
   </select>
   <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
     select id, r_id, d_id, `describe`,status

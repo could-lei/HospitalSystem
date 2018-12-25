@@ -6,6 +6,7 @@ import com.example.demo.model.items;
 import com.example.demo.model.patient;
 import com.example.demo.result.Result;
 import com.example.demo.service.*;
+import com.example.demo.unitl.CheckTelephoneUtil;
 import com.example.demo.unitl.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -57,32 +58,44 @@ public class HRSController {
     })
     @RequestMapping(value = "/appointment",method = RequestMethod.POST)
     public Result appointment(@RequestHeader(name="Content-Type", defaultValue = "application/json") String contentType,
-                              @RequestParam Map map){
-        String medicareId=map.get("medicareId").toString();
-        Integer itemId=Integer.valueOf(map.get("departmentId").toString());
+                              @RequestBody String cs){
+        Map<String,Object>map=JSON.parseObject(cs,Map.class);
+        String medicareId=map.get("medicareId").toString();//map.get("departmentId").toString()
+        System.out.println(medicareId);
+        List<Integer> itemId=JSON.parseArray(map.get("departmentId").toString(),Integer.class);
         patient p;
-        p=patientService.searchPatient(medicareId);
-        department d=searchdepartment(itemId);
+        p=patientService.searchPatientById(medicareId);
         if (p!=null){
-//            LinkedList<patient> list=this.appointmentMap.get(d.getName());
-            LinkedList<patient> list=appointmentService.save(d.getDepartment());
-            if (ifHasElement(list,p)){
-                return ResultUtil.error("用户已经在排队");
-            }else {
-                list.addFirst(p);
-                appointmentService.update(d.getDepartment(),list);
-                return ResultUtil.success("排队成功");
+            for (Integer d:itemId
+                 ) {
+                System.out.println();
+                items ds=searchdepartment(d.intValue()+1);
+                LinkedList<patient> list=appointmentService.save(ds.getName());
+                if (list.size()>=10){
+                    return ResultUtil.error("对列已经排满");
+                }
+                if (ifHasElement(list,p)){
+                }else {
+                    list.addFirst(p);
+                    appointmentService.update(ds.getName(),list);
+                }
             }
         }else {
             return ResultUtil.error("不存在该用户");
         }
-
+        return ResultUtil.success("排队成功");
     }
     @ApiOperation(value = "部门字典")
     @RequestMapping(value = "/search_department",method = RequestMethod.POST)
     public Result search_department(@RequestHeader(name="Content-Type", defaultValue = "application/json") String contentType,
                                     @RequestParam Map map){
-        return ResultUtil.success(departmentService.get_departments());
+        List<department>departmentList=departmentService.get_departments();
+        List<String> departments=new ArrayList<>();
+        for (department d:departmentList
+             ) {
+            departments.add(d.getDepartment());
+        }
+        return ResultUtil.success(departments);
     }
     @ApiOperation(value = "结算")
     @ApiImplicitParams({@ApiImplicitParam(name = "medicareId",value = "医疗卡号",required = true,dataType = "String")
@@ -125,11 +138,20 @@ public class HRSController {
     })
     @RequestMapping(value = "/applyCard",method = RequestMethod.POST)
     public Result applyCard(@RequestHeader(name="Content-Type", defaultValue = "application/json") String contentType,
-                            @RequestParam Map map){
+                            @RequestBody String cs){
+        Map<String,String>map= JSON.parseObject(cs,Map.class);
         patient p=new patient();
-        p.setMedicare(Long.valueOf(map.get("medicareId").toString()));
+        System.out.println("信息："+cs);
+//        p.setMedicare(Long.valueOf(map.get("medicareId").toString()));
         p.setName(map.get("name").toString());
         p.setPhone(Long.valueOf(map.get("phone").toString()));
+        boolean isMobile=CheckTelephoneUtil.isMobileNum(map.get("phone").toString());
+        if (!isMobile){
+            return ResultUtil.error("手机号错误");
+        }
+        if (patientService.check(map.get("eid").toString(),Long.valueOf(map.get("phone").toString()))){
+            return ResultUtil.error("手机号或身份证号已经注册");
+        }
         p.setBirthplace(map.get("birthplace").toString());
         p.setFamilyAddress(map.get("familyaddress").toString());
         p.setContactAddress(map.get("contactaddress").toString());
@@ -142,6 +164,19 @@ public class HRSController {
         }
         return ResultUtil.success("成功");
     }
+    @RequestMapping(value = "unpaidOrders",method = RequestMethod.POST)
+    public Result unpaidOrders(@RequestBody String cs){
+        Map<String,Object>map=JSON.parseObject(cs,Map.class);
+        Long medicareId=Long.valueOf(map.get("target").toString());
+        Map<String,Object>order;
+        try {
+            order=receptorService.unpaidOrders(medicareId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.error("不存在");
+        }
+        return ResultUtil.success(order);
+    }
 
 
     public Boolean ifHasElement(List<patient> list,patient p){
@@ -153,9 +188,9 @@ public class HRSController {
         }
         return false;
     }
-    public department searchdepartment(Integer itemId){
-        List<department> list=departmentService.get_departments();
-        for (department d:list
+    public items searchdepartment(Integer itemId){
+        List<items> list=itemsService.getAllItems();
+        for (items d:list
              ) {
             if (d.getId().equals(itemId)){
                 return d;

@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="department" jdbcType="VARCHAR" property="department" />
     <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_department
@@ -23,12 +24,17 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, department, describe
+    select id, department, `describe`,price
     from sys_department
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findByRid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select d.id, d.department, d.`describe`,d.price
+    from sys_department as d,sys_check_list as l
+    where d.id=l.d_id AND l.r_id=#{rId,jdbcType=INTEGER}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, department, describe
+    select id, department, `describe`
     from sys_department
   </select>
 </mapper>

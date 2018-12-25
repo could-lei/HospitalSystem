@@ -38,6 +38,11 @@
     from sys_prescription_list
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findByRid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+     select id, rId, fId, num
+    from sys_prescription_list
+    where rId = #{id,jdbcType=BIGINT}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, rId, fId, num
     from sys_prescription_list

@@ -9,6 +9,7 @@
     <result column="pruductId" jdbcType="VARCHAR" property="pruductid" />
     <result column="dosage" jdbcType="DOUBLE" property="dosage" />
     <result column="effectiveDate" jdbcType="INTEGER" property="effectivedate" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_fda
@@ -16,7 +17,7 @@
   </delete>
   <insert id="insert" parameterType="com.example.demo.model.fda">
     insert into sys_fda (id, drug, drugNumber, 
-      describe, pruductId, dosage, 
+      `describe`, pruductId, dosage,
       effectiveDate)
     values (#{id,jdbcType=INTEGER}, #{drug,jdbcType=VARCHAR}, #{drugnumber,jdbcType=VARCHAR}, 
       #{describe,jdbcType=VARCHAR}, #{pruductid,jdbcType=VARCHAR}, #{dosage,jdbcType=DOUBLE}, 
@@ -26,19 +27,19 @@
     update sys_fda
     set drug = #{drug,jdbcType=VARCHAR},
       drugNumber = #{drugnumber,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       pruductId = #{pruductid,jdbcType=VARCHAR},
       dosage = #{dosage,jdbcType=DOUBLE},
       effectiveDate = #{effectivedate,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, drug, drugNumber, describe, pruductId, dosage, effectiveDate
+    select id, drug, drugNumber, `describe`, pruductId, dosage, effectiveDate,price
     from sys_fda
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, drug, drugNumber, describe, pruductId, dosage, effectiveDate
+    select id, drug, drugNumber, `describe`, pruductId, dosage, effectiveDate,price
     from sys_fda
   </select>
 </mapper>

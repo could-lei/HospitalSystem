@@ -138,6 +138,16 @@ public class MMSController {
         }
         return ResultUtil.success(fda_respons);
     }
+    @RequestMapping(value = "/checkOrder",method = RequestMethod.POST)
+    public Result checkOrder(ServletRequest servletRequest, @RequestBody String cs){
+        Map<String,Object>map=JSON.parseObject(cs,Map.class);
+        Long medicareId=Long.valueOf(map.get("medicareId").toString());
+        Long type=Long.valueOf(map.get("type").toString());
+        List<TestOrderResponse>testOrderResponses=checkService.FindTest(type,medicareId);
+        HashMap<String,List<TestOrderResponse>>m=new HashMap<>();
+        m.put("order",testOrderResponses);
+        return ResultUtil.success(m);
+    }
     @ApiOperation(value = "开检查单")
     @ApiImplicitParams({@ApiImplicitParam(name = "medicareId",value = "医疗卡号",required = true,dataType = "String"),
             @ApiImplicitParam(name = "departmentIds",value = "检查项目id数组",required = true,dataType = "String")
@@ -226,21 +236,24 @@ public class MMSController {
     @ApiImplicitParams({@ApiImplicitParam(name = "medicareId",value = "医疗卡号",required = true,dataType = "String")
     })
     @RequestMapping(value = "/finishCheck",method = RequestMethod.POST)
-    public Result finishCheck(@RequestHeader(name="Content-Type", defaultValue = "application/json") String contentType,
-                              @RequestParam Map map){
-        Long medicareId=Long.valueOf(map.get("medicareId").toString());
+    public Result finishCheck(@RequestBody String cs){
+        Map<String,Object>map=JSON.parseObject(cs,Map.class);
+        Long medicareId=Long.valueOf(map.get("orderId").toString());
         try {
             checkService.finishCheck(medicareId);
             return  ResultUtil.success("检查结束");
         }catch (Exception e){
+            e.printStackTrace();
             return ResultUtil.error("结束失败");
         }
     }
     @ApiOperation(value = "取检查")
     @ApiImplicitParams({@ApiImplicitParam(name = "medicareId",value = "医疗卡号",required = true,dataType = "String")
     })
-    @RequestMapping(value = "/takeResults/{medicareId}",method = RequestMethod.GET)
-    public String takeResults(HttpServletResponse response, @PathVariable("medicareId") String medicareId){
+    @RequestMapping(value = "/checkDoneOrder",method = RequestMethod.POST)
+    public Result takeResults(HttpServletResponse response,@RequestBody String cs){
+        Map<String,Object>map=JSON.parseObject(cs,Map.class);
+        Long medicareId=Long.valueOf(map.get("medicareId").toString());
         Long medicareId1=Long.valueOf(medicareId);
         Word d=new Word();
         List<String>list=departmentService.getProject(medicareId1);
@@ -248,6 +261,7 @@ public class MMSController {
         String filename="1.doc";
 //        filePath = "F:/test" ;
         File file = new File(filePath + "/" + filename);
+        String stringBuilder=new String();
         if(file.exists()){ //判断文件父目录是否存在
             response.setContentType("application/force-download");
             response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
@@ -256,14 +270,15 @@ public class MMSController {
             FileInputStream fis = null; //文件输入流
             BufferedInputStream bis = null;
 
-            OutputStream os = null; //输出流
+//            OutputStream os = null; //输出流
             try {
-                os = response.getOutputStream();
+//                os = response.getOutputStream();
                 fis = new FileInputStream(file);
                 bis = new BufferedInputStream(fis);
                 int i = bis.read(buffer);
                 while(i != -1){
-                    os.write(buffer);
+                    stringBuilder+=buffer;
+//                    os.write(buffer);
                     i = bis.read(buffer);
                 }
 
@@ -280,7 +295,7 @@ public class MMSController {
                 e.printStackTrace();
             }
         }
-        return null;
+        return ResultUtil.success(stringBuilder);
     }
 
 //    public String createWord(List<String>projects){

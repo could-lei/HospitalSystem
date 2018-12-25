@@ -9,7 +9,7 @@ public interface receptorMapper {
 
     int insert(receptor record);
 
-    receptor selectByPrimaryKey(Long id);
+    receptor selectByPrimaryKey(Integer id);
 
     receptor selectByMedicareId(Long medicareId);
 

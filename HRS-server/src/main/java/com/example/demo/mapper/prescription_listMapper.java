@@ -17,4 +17,5 @@ public interface prescription_listMapper {
     int updateByPrimaryKey(prescription_list record);
 
     List<prise> accout(Long medicare);
+    List<prescription_list> findByRid(Long id);
 }

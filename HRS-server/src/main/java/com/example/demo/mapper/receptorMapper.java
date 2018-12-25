@@ -17,5 +17,7 @@ public interface receptorMapper {
 
     int updateByPrimaryKey(receptor record);
 
+    receptor selectByMid(Long mid);
+
 //    int updateBy()
 }

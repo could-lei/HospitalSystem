@@ -33,6 +33,13 @@
       #{familyAddress,jdbcType=VARCHAR}, #{contactAddress,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
       #{medicare,jdbcType=INTEGER}, #{eid,jdbcType=BIGINT})
   </insert>
+  <select id="check" resultMap="BaseResultMap" parameterType="map">
+    SELECT id, create_time, last_ip, name, password, phone, state, update_time, birthplace,
+    family_address, contact_address, sex, medicare, eid
+    from sys_patient
+    WHERE id_card_num=#{idcard,jdbcType=VARCHAR} OR phone=#{phone,jdbcType=jdbcType=BIGINT}
+    WHERE
+  </select>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.model.patient">
     update sys_patient
     set create_time = #{createTime,jdbcType=BIGINT},

@@ -13,6 +13,8 @@ public class fda {
 
     private Double dosage;
 
+    private Double price;
+
     private Integer effectivedate;
 
     public Integer getId() {
@@ -69,5 +71,13 @@ public class fda {
 
     public void setEffectivedate(Integer effectivedate) {
         this.effectivedate = effectivedate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

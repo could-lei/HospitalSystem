@@ -8,5 +8,7 @@ import com.example.demo.model.patient;
 public interface patientService {
     public int addPatient(patient patient);
     public patient searchPatient(String medicareId);
+    public patient searchPatientById(String id);
+    public boolean check(String idcard,long phone);
 
 }
